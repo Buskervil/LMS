@@ -21,7 +21,7 @@ public class Course : AggregateRoot
     {
     }
 
-    private Course(CourseId id, EntityName name, string description, Guid ownerId, DateTimeOffset createdAt)
+    private Course(CourseId id, EntityName name, string description, Guid ownerId, DateTimeOffset createdAt, bool published)
     {
         Id = id;
         Name = name;
@@ -34,7 +34,7 @@ public class Course : AggregateRoot
         string description,
         Guid ownerId)
     {
-        return new Course(CourseId.Create(), name, description, ownerId, DateTimeOffset.UtcNow);
+        return new Course(CourseId.Create(), name, description, ownerId, DateTimeOffset.UtcNow, false);
     }
 
     public Result<Guid> AddSection(EntityName name,

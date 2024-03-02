@@ -4,7 +4,7 @@ namespace Courses.Domain.Course;
 
 public interface ICourseRepository
 {
-    Task<Course> GetById(CourseId id);
+    Task<Course?> GetById(CourseId id);
     Task Add(Course course);
-    Task Update(Course course);
+    void Update(Course course);
 }
