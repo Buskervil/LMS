@@ -1,6 +1,7 @@
 ﻿using Courses.Application.Core;
 using Lms.Core.Application.Sessions;
 using Lms.Core.Infrastructure;
+using Lms.Courses.Infrastructure.Processing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lms.Core.Api;
@@ -13,6 +14,7 @@ public static class ModuleBuilder
         serviceCollection.AddMediatR(cfg =>
         {
             cfg.RegisterServicesFromAssembly(typeof(ICoursesModule).Assembly);
+            cfg.AddOpenBehavior(typeof(UnitOfWorkCommandPipelineBehavior<,>));
         });
 
 

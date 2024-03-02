@@ -5,6 +5,6 @@ namespace Lms.Courses.Domain.Course;
 public interface ICourseRepository
 {
     Task<Course?> GetByIdAsync(CourseId id);
-    Task AddAsync(Course course);
+    void Add(Course course);
     void Update(Course course);
 }

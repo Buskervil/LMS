@@ -19,12 +19,12 @@ internal sealed class CreateCourseCommandHandler : ICommandHandler<CreateCourseC
         _sessionProvider = sessionProvider;
     }
 
-    public async Task<Result<Guid>> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
+    public Task<Result<Guid>> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
     {
         var result = Course.Create(EntityName.Create(request.Name), EntityDescription.Create(request.Description), _sessionProvider.UserId);
 
-        await _courseRepository.AddAsync(result);
+        _courseRepository.Add(result);
 
-        return result.Id.Value;
+        return Task.FromResult<Result<Guid>>(result.Id.Value);
     }
 }

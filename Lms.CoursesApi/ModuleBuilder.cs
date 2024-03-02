@@ -1,5 +1,6 @@
 using Courses.Application.Core;
 using Lms.Courses.Domain.Course;
+using Lms.Courses.Infrastructure.DataAccess;
 using Lms.Courses.Infrastructure.DataAccess.Courses;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,6 +12,7 @@ public static class ModuleBuilder
     {
         serviceCollection.AddScoped<ICoursesModule, CoursesModule>();
         serviceCollection.AddScoped<ICourseRepository, CourseRepository>();
+        serviceCollection.AddScoped<IUnitOfWork, CoursesContext>();
 
         return serviceCollection;
     }

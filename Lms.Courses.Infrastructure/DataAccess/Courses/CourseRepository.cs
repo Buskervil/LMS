@@ -21,9 +21,9 @@ public class CourseRepository : ICourseRepository
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task AddAsync(Course course)
+    public void Add(Course course)
     {
-        await _coursesContext.AddAsync(course);
+        _coursesContext.Add(course);
     }
 
     public void Update(Course course)

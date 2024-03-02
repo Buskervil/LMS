@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Lms.Courses.Infrastructure.DataAccess;
 
-public class CoursesContext : DbContext
+public class CoursesContext : DbContext, IUnitOfWork
 {
     public CoursesContext(DbContextOptions<CoursesContext> options) : base(options)
     {
@@ -15,5 +15,10 @@ public class CoursesContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+    }
+
+    public Task<int> CommitAsync(CancellationToken cancellationToken = default(CancellationToken))
+    {
+        return SaveChangesAsync(cancellationToken);
     }
 }
