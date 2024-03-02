@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  backend:
+    image: "lms-api"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:8080"
+
+  frontend:
+    image: "lms-client"
+    ports:
+      - "5001:3000"
+
+  nginx:
+    image: nginx:mainline
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+  
+  postgres:
+    image: postgres
+    env_file:
+      - ./postgresql-dev.env
+    ports:
+      - "5002:5432"
