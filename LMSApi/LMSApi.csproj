@@ -22,4 +22,9 @@
       </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Lms.Core.Api\Lms.Core.Api.csproj" />
+      <ProjectReference Include="..\Lms.CoursesApi\Lms.CoursesApi.csproj" />
+    </ItemGroup>
+
 </Project>

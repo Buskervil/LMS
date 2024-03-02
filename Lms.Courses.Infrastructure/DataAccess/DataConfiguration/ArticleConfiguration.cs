@@ -11,17 +11,23 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
     {
         builder.ToTable("Article");
 
-        builder.HasKey(c => c.Id);
-
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
-
-        builder.Property(c => c.Name)
-            .HasConversion(t => t.Value,
-                v => EntityName.Create(v));
         
         builder.Property(c => c.Content)
             .HasConversion(t => t.Value,
                 v => ArticleContent.Create(v));
+    }
+}
+
+public class CourseItemConfiguration : IEntityTypeConfiguration<CourseItem>
+{
+    public void Configure(EntityTypeBuilder<CourseItem> builder)
+    {
+        builder.HasKey(c => c.Id);
+        
+        builder.Property(c => c.Name)
+            .HasConversion(t => t.Value,
+                v => EntityName.Create(v));
     }
 }

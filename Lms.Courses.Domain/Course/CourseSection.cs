@@ -9,7 +9,7 @@ public class CourseSection : Entity
     private List<CourseItem> _courseItems = new();
 
     public Guid Id { get; private set; }
-    public Guid CourseId { get; private set; }
+    public CourseId CourseId { get; private set; }
     public EntityName Name { get; private set; }
     public EntityDescription Description { get; private set; }
     public Guid AuthorId { get; private set; }
@@ -23,7 +23,7 @@ public class CourseSection : Entity
     }
 
     private CourseSection(Guid id,
-        Guid courseId,
+        CourseId courseId,
         EntityName name,
         EntityDescription description,
         Guid authorId,
@@ -39,7 +39,7 @@ public class CourseSection : Entity
         PreviousSection = previousSection;
     }
 
-    public static CourseSection Create(Guid courseId,
+    public static CourseSection Create(CourseId courseId,
         EntityName name,
         EntityDescription description,
         Guid authorId,

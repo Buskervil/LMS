@@ -11,8 +11,13 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Lms.Core.Application\Lms.Core.Application.csproj" />
+      <ProjectReference Include="..\Lms.Core.Infrastructure\Lms.Core.Infrastructure.csproj" />
       <ProjectReference Include="..\Lms.Courses.Application\Lms.Courses.Application.csproj" />
-      <ProjectReference Include="..\Lms.Courses.Infrastructure\Lms.Courses.Infrastructure.csproj" />
     </ItemGroup>
-    
+
+    <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.2.0" />
+    </ItemGroup>
+
 </Project>

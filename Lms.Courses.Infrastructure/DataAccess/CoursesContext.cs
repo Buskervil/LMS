@@ -5,7 +5,7 @@ namespace Lms.Courses.Infrastructure.DataAccess;
 
 public class CoursesContext : DbContext
 {
-    public CoursesContext(DbContextOptions<CoursesContext> options)
+    public CoursesContext(DbContextOptions<CoursesContext> options) : base(options)
     {
     }
 

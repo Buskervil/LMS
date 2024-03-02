@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Courses.Application.Core
 {
-    internal sealed class CoursesModule : ICoursesModule
+    public sealed class CoursesModule : ICoursesModule
     {
         private readonly IMediator _mediator;
 
