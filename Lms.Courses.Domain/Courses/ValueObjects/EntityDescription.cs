@@ -1,6 +1,4 @@
-using System;
-
-namespace Lms.Courses.Domain.Course.ValueObjects;
+namespace Lms.Courses.Domain.Courses.ValueObjects;
 
 public struct EntityDescription : IComparable
 {

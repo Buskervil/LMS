@@ -1,5 +1,5 @@
-using Lms.Courses.Domain.Course;
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses;
+using Lms.Courses.Domain.Courses.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,17 +17,5 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
         builder.Property(c => c.Content)
             .HasConversion(t => t.Value,
                 v => ArticleContent.Create(v));
-    }
-}
-
-public class CourseItemConfiguration : IEntityTypeConfiguration<CourseItem>
-{
-    public void Configure(EntityTypeBuilder<CourseItem> builder)
-    {
-        builder.HasKey(c => c.Id);
-        
-        builder.Property(c => c.Name)
-            .HasConversion(t => t.Value,
-                v => EntityName.Create(v));
     }
 }

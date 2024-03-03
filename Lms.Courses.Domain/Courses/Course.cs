@@ -1,8 +1,8 @@
 ﻿using Lms.Core.Domain.Primitives;
 using Lms.Core.Domain.Results;
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses.ValueObjects;
 
-namespace Lms.Courses.Domain.Course;
+namespace Lms.Courses.Domain.Courses;
 
 public class Course : AggregateRoot
 {
@@ -14,8 +14,10 @@ public class Course : AggregateRoot
     public Guid OwnerId { get; private set; }
     public DateTimeOffset CreatedAt { get; private set; }
     public bool Published { get; private set; }
+    public TimeSpan Duration { get; private set; }
 
     public IReadOnlyCollection<CourseSection> CourseSections => _courseSections.ToList();
+    public IReadOnlyCollection<CourseItem> Items => _courseSections.SelectMany(s => s.CourseItems).ToArray();
 
     private Course()
     {

@@ -1,8 +1,8 @@
 using Courses.Application.Core;
 using Lms.Core.Domain.Primitives;
 using Lms.Core.Domain.Results;
-using Lms.Courses.Domain.Course;
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses;
+using Lms.Courses.Domain.Courses.ValueObjects;
 
 namespace Courses.Application.Courses.AddArticle;
 

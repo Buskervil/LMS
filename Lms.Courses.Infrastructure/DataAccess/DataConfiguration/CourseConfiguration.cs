@@ -1,5 +1,5 @@
-using Lms.Courses.Domain.Course;
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses;
+using Lms.Courses.Domain.Courses.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -25,6 +25,12 @@ public class CourseConfiguration : IEntityTypeConfiguration<Course>
         builder.Property(c => c.Description)
             .HasConversion(t => t.Value,
                 v => EntityDescription.Create(v));
+
+        builder.Property(c => c.Duration)
+            .HasConversion(t => t.TotalDays, 
+                v => TimeSpan.FromDays(v));
+        
+        builder.Ignore(c => c.Items);
 
         builder.HasMany(c => c.CourseSections)
             .WithOne()

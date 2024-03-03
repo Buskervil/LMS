@@ -1,7 +1,8 @@
 using Lms.Core.Domain.Results;
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses.ValueObjects;
+using Lms.Courses.Domain.Learnings.ValueObjects;
 
-namespace Lms.Courses.Domain.Course;
+namespace Lms.Courses.Domain.Courses;
 
 public class Article : CourseItem
 {
@@ -32,5 +33,10 @@ public class Article : CourseItem
         Content = content;
 
         return Result.Success();
+    }
+
+    public override Percent GetScore()
+    {
+        return Percent.Create(100);
     }
 }

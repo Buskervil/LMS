@@ -1,7 +1,8 @@
 using Lms.Core.Domain.Primitives;
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses.ValueObjects;
+using Lms.Courses.Domain.Learnings.ValueObjects;
 
-namespace Lms.Courses.Domain.Course;
+namespace Lms.Courses.Domain.Courses;
 
 public abstract class CourseItem : Entity
 {
@@ -19,6 +20,8 @@ public abstract class CourseItem : Entity
         CreatedAt = createdAt;
         PreviousItemId = previousItemId;
     }
+
+    public abstract Percent GetScore();
     
     #region Overrides
 

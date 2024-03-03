@@ -1,6 +1,7 @@
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses.ValueObjects;
+using Lms.Courses.Domain.Learnings.ValueObjects;
 
-namespace Lms.Courses.Domain.Course;
+namespace Lms.Courses.Domain.Courses;
 
 public class Test : CourseItem
 {
@@ -10,5 +11,10 @@ public class Test : CourseItem
         createdAt,
         previousItemId)
     {
+    }
+
+    public override Percent GetScore()
+    {
+        throw new NotImplementedException();
     }
 }

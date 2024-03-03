@@ -1,5 +1,5 @@
-using Lms.Courses.Domain.Course;
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses;
+using Lms.Courses.Domain.Courses.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

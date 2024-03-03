@@ -1,6 +1,6 @@
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses.ValueObjects;
 
-namespace Lms.Courses.Domain.Course;
+namespace Lms.Courses.Domain.Courses;
 
 public interface ICourseRepository
 {

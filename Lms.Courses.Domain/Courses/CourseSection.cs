@@ -1,8 +1,8 @@
 using Lms.Core.Domain.Primitives;
 using Lms.Core.Domain.Results;
-using Lms.Courses.Domain.Course.ValueObjects;
+using Lms.Courses.Domain.Courses.ValueObjects;
 
-namespace Lms.Courses.Domain.Course;
+namespace Lms.Courses.Domain.Courses;
 
 public class CourseSection : Entity
 {
