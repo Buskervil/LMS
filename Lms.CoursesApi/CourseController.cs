@@ -2,14 +2,15 @@
 using Courses.Application.Courses.AddArticle;
 using Courses.Application.Courses.AddSection;
 using Courses.Application.Courses.CreateCourse;
-using Lms.Core.Domain.Primitives;
+using Lms.Core.Api;
 using Lms.CoursesApi.Dto;
+using Lms.CoursesApi.Dto.Courses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lms.CoursesApi;
 
 [Route("api/course")]
-public class CourseController : Controller
+public class CourseController : BaseController
 {
     private readonly ICoursesModule _coursesModule;
 
@@ -47,10 +48,5 @@ public class CourseController : Controller
         var result = await _coursesModule.ExecuteCommandAsync(command);
 
         return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result);
-    }
-
-    private IActionResult CreateErrorResponse(ApiError apiError)
-    {
-        return StatusCode((int)apiError.Code, new { Error = apiError.Message });
     }
 }

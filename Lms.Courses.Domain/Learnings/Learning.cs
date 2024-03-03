@@ -51,7 +51,7 @@ public sealed class Learning : Entity
         return learning;
     }
 
-    public static Result<Learning> EnrollInTheCourse(Guid studentId, Course course)
+    public static Result<Learning> StartLearnCourse(Guid studentId, Course course)
     {
         if (course.Published == false)
         {
