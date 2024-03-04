@@ -1,4 +1,5 @@
 ﻿using Courses.Application.Core;
+using Lms.Core.Application;
 using Lms.Core.Application.Connections;
 using Lms.Core.Application.Sessions;
 using Lms.Core.Domain.Primitives;
@@ -24,6 +25,7 @@ public static class ModuleBuilder
             cfg.AddOpenBehavior(typeof(UnitOfWorkCommandPipelineBehavior<,>));
         });
         serviceCollection.AddScoped<AuthorizeFilter>();
+        serviceCollection.AddScoped<ISqlConnectionFactory, SqlConnectionFactory>();
         serviceCollection.AddSingleton<IConnectionStringProvider>(new ConnectionStringProvider(connectionString));
 
         return serviceCollection;

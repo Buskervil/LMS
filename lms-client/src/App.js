@@ -1,34 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
+import Courses from './components/Courses/Courses';
+import { Header } from 'antd/es/layout/layout';
+import {Routes, Route, Link} from 'react-router-dom'
+
+import NotFound from './components/NotFound/NotFound'
+import Course from './components/Course/Course';
 
 function App() {
   
-  let [forecast, setForecast] = useState([])
-  
-  let loadForecast = async () => {
-    let response = await fetch(
-        'api/weatherforecast',
-        {
-          method: 'get'
-        }
-    ) 
-    
-    let json = await response.json();
-    console.log(json)
-    setForecast(json)
-  }
-  
   return (
-    <div className="App">
-        {forecast.map((f, i) =>
-        <div>
-          <p>{f.date}</p>
-          <p>{f.summary}</p>
-          <p>{f.temperatureC}</p>
-        </div>)}
-      <button onClick={loadForecast}>Загрузить прогноз</button>
-    </div>
+      <div className="App">
+        <Header/>
+        <Routes>
+          <Route path="/" element={<Courses />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+          <Route path="course/:id" element={<Course />}></Route>
+        </Routes>
+      </div>
   );
 }
 

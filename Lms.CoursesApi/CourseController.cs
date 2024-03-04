@@ -2,8 +2,8 @@
 using Courses.Application.Courses.AddArticle;
 using Courses.Application.Courses.AddSection;
 using Courses.Application.Courses.CreateCourse;
+using Courses.Application.Courses.GetCourses;
 using Lms.Core.Api;
-using Lms.CoursesApi.Dto;
 using Lms.CoursesApi.Dto.Courses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +17,16 @@ public class CourseController : BaseController
     public CourseController(ICoursesModule coursesModule)
     {
         _coursesModule = coursesModule;
+    }
+
+    [HttpGet]
+    //[ServiceFilter(typeof(AuthorizeFilter))]
+    public async Task<IActionResult> GetCourses()
+    {
+        var query = new GetCoursesQuery();
+        var result = await _coursesModule.ExecuteQueryAsync(query);
+
+        return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result.Value);
     }
 
     [HttpPost("")]
@@ -35,7 +45,7 @@ public class CourseController : BaseController
         var command = new AddSectionCommand(createData.Name, createData.Description, createData.CourseId, createData.PreviousSectionId);
         var result = await _coursesModule.ExecuteCommandAsync(command);
 
-        return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result);
+        return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result.Value);
     }
 
     [HttpPost("AddArticle")]
@@ -48,6 +58,6 @@ public class CourseController : BaseController
             createData.Content);
         var result = await _coursesModule.ExecuteCommandAsync(command);
 
-        return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result);
+        return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result.Value);
     }
 }
