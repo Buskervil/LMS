@@ -2,6 +2,10 @@
     display: flex;
 }
 
+.course-header{
+    margin-bottom: 40px;
+}
+
 .course-structure-menu{
     height: calc(100vh - 60px);
     width: 300px;

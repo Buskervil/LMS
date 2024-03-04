@@ -4,7 +4,7 @@ import { Menu } from 'antd';
 import { ReadOutlined, PlayCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import apiClient from "../../apiClient/apiClient"
-
+import Markdown from 'react-markdown'
 
 const Course = () => {
 
@@ -55,6 +55,7 @@ const Course = () => {
         return items;
     }
 
+
     useEffect(() => {
         const fetchCourses = async () => {
             try {
@@ -92,8 +93,8 @@ const Course = () => {
         {selectedItem === courseHome
             ?
                 <div className='course-wrapper'>
-                    <h1>{courseStructure.courseName}</h1>
-                    <p>{courseStructure.courseDescription}</p>
+                    <h1 className='course-header'>{courseStructure.courseName}</h1>
+                    <Markdown>{courseStructure.courseDescription}</Markdown>
                     <p>Продолжительность курса {courseStructure.duration} дней</p>
                     <p>Курс создан: {getReadableDate(courseStructure.createdAt)}</p>
                 </div>
