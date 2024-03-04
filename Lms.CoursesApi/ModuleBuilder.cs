@@ -1,4 +1,5 @@
 using Courses.Application.Core;
+using Courses.Application.Courses;
 using Lms.Courses.Domain.Courses;
 using Lms.Courses.Domain.Learnings;
 using Lms.Courses.Infrastructure.DataAccess;
@@ -23,6 +24,7 @@ public static class ModuleBuilder
         serviceCollection.AddScoped<IAuthenticationLoginRepository, AuthenticationLoginsRepository>();
         serviceCollection.AddScoped<IUnitOfWork, CoursesContext>();
         serviceCollection.AddDbContext<CoursesContext>(options => options.UseNpgsql(connectionString));
+        serviceCollection.AddScoped<ICoursesReadRepository, CoursesReadRepository>();
         
         return serviceCollection;
     }

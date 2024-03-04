@@ -83,7 +83,13 @@ public class CourseSection : Entity
             }
         }
 
-        return Article.Create(name, Id, content, previousItemId).Map(a => a.Id);
+        var article = Article.Create(name, Id, content, previousItemId);
+        if (article.IsSuccess)
+        {
+            _courseItems.Add(article.Value);
+        }
+
+        return article.Map(a => a.Id);
     }
     
     internal Result EditArticle(Guid articleId, EntityName name, ArticleContent content)
@@ -94,5 +100,25 @@ public class CourseSection : Entity
         }
 
         return article.Edit(name, content);
+    }
+    
+    public CourseItem[] GetItemsInOrder()
+    {
+        if (_courseItems.Count == 0)
+        {
+            return Array.Empty<CourseItem>();
+        }
+        
+        var itemsByPreviousId = CourseItems
+            .ToDictionary(s => s.PreviousItemId ?? Guid.Empty, s => s);
+
+        var items = new CourseItem[CourseItems.Count];
+        items[0] = itemsByPreviousId[Guid.Empty];
+        for (var i = 1; i < items.Length; i++)
+        {
+            items[i] = itemsByPreviousId[items[i - 1].Id];
+        }
+
+        return items;
     }
 }

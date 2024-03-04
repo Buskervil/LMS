@@ -9,6 +9,7 @@ public class CourseItemConfiguration : IEntityTypeConfiguration<CourseItem>
 {
     public void Configure(EntityTypeBuilder<CourseItem> builder)
     {
+        builder.UseTpcMappingStrategy();
         builder.HasKey(c => c.Id);
         
         builder.Property(c => c.Name)

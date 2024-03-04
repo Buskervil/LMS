@@ -101,6 +101,26 @@ public class Course : AggregateRoot
     {
         Published = false;
     }
+
+    public CourseSection[] GetSectionsInOrder()
+    {
+        if (_courseSections.Count == 0)
+        {
+            return Array.Empty<CourseSection>();
+        }
+        
+        var sectionsByPreviousId = CourseSections
+            .ToDictionary(s => s.PreviousSection ?? Guid.Empty, s => s);
+
+        var sections = new CourseSection[CourseSections.Count];
+        sections[0] = sectionsByPreviousId[Guid.Empty];
+        for (var i = 1; i < sections.Length; i++)
+        {
+            sections[i] = sectionsByPreviousId[sections[i - 1].Id];
+        }
+
+        return sections;
+    }
     
     #region Overrides
 

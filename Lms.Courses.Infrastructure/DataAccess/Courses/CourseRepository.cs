@@ -30,4 +30,13 @@ public class CourseRepository : ICourseRepository
     {
         _coursesContext.Update(course);
     }
+
+    public void Test()
+    {
+        _coursesContext.Courses
+            .AsSingleQuery()
+            .AsNoTracking()
+            .Include(c => c.CourseSections)
+            .ThenInclude(s => s.CourseItems);
+    }
 }

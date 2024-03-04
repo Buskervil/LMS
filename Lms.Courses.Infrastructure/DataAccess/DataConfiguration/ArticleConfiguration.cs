@@ -10,12 +10,16 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
     public void Configure(EntityTypeBuilder<Article> builder)
     {
         builder.ToTable("Article");
-
+        
         builder.Property(c => c.Id)
             .ValueGeneratedNever();
         
         builder.Property(c => c.Content)
             .HasConversion(t => t.Value,
                 v => ArticleContent.Create(v));
+                
+        // builder.Property(c => c.Name)
+        //     .HasConversion(t => t.Value,
+        //         v => EntityName.Create(v));
     }
 }
