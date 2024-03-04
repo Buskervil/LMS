@@ -23,7 +23,7 @@ const Courses = () => {
 
     return (
       <div className="wrapper">
-        <h1>Образование</h1>
+        <h1 className="courses-header">Образование</h1>
         <div className="courses">
           <CoursesPage
             className="half-width"

@@ -2,7 +2,7 @@ namespace Lms.Courses.Domain.Courses.ValueObjects;
 
 public struct EntityDescription : IComparable
 {
-    private const int MaxLength = 300;
+    private const int MaxLength = 2000;
     public readonly string Value;
 
     public EntityDescription(string value)

@@ -1,4 +1,15 @@
+.course-page{
+    display: flex;
+}
+
 .course-structure-menu{
-    height: 100vh;
+    height: calc(100vh - 60px);
     width: 300px;
+}
+
+.course-wrapper{
+    width: 1600px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 40px;
 }

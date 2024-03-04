@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState } from 'react';
 import Courses from './components/Courses/Courses';
-import { Header } from 'antd/es/layout/layout';
+import Header from './components/Header/Header';
 import {Routes, Route, Link} from 'react-router-dom'
 
 import NotFound from './components/NotFound/NotFound'

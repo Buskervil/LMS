@@ -6,7 +6,7 @@ const CoursesPage = (props) => {
 
     return (
       <div className={`courses-page ${props.className}`}>
-        <h2 className="courses-header">{props.title}</h2>
+        <h2 className="coursesPage-header">{props.title}</h2>
         <div className="courses-list">
           {props.courses.map((c) => (
             <Link to={`/course/${c.id}`} className='link'>
