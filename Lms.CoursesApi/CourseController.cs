@@ -20,6 +20,7 @@ public class CourseController : BaseController
     }
 
     [HttpPost("")]
+    [ServiceFilter(typeof(AuthorizeFilter))]
     public async Task<IActionResult> CreateCourse(CourseCreateData createData)
     {
         var command = new CreateCourseCommand(createData.Name, createData.Description);

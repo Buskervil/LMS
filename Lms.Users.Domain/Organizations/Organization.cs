@@ -26,7 +26,7 @@ public sealed class Organization : AggregateRoot
         _units.Add(unit);
     }
 
-    public static Organization Create(EntityName name,
+    public static (Organization Organization, AuthenticationLogin Login) Create(EntityName name,
         EntityName unitName,
         string employeeFirstName,
         string employeeLastName,
@@ -38,25 +38,34 @@ public sealed class Organization : AggregateRoot
         var employeeProfile = Profile.Create(employeeFirstName, employeeLastName, employeeContact);
         var employee = Employee.Create(id, unit.Id, "Управляющий", UserRole.Supervisor, employeeProfile, employeeLogin);
 
-        unit.AddEmployee(employee);
+        unit.AddEmployee(employee.Employee);
 
-        return new Organization(id, name, unit);
+        var organization = new Organization(id, name, unit);
+
+        return (organization, employee.Login);
     }
 
-    public Result AddNewEmployee(string firstName, string lastName, string contact, Guid unitId, string post, UserRole role, Login login)
+    public Result<(Employee employee, AuthenticationLogin login)> AddNewEmployee(string firstName,
+        string lastName,
+        string contact,
+        Guid unitId,
+        string post,
+        UserRole role,
+        Login login)
     {
         var unit = _units.FirstOrDefault(u => u.Id == unitId);
         if (unit == null)
         {
-            return Result.Failure(ApiError.BadRequest($"Подразделение или филиал с id {unitId} не существует"));
+            return Result.Failure<(Employee, AuthenticationLogin)>(
+                ApiError.BadRequest($"Подразделение или филиал с id {unitId} не существует"));
         }
-        
+
         var employeeProfile = Profile.Create(firstName, lastName, contact);
         var employee = Employee.Create(Id, unitId, post, role, employeeProfile, login);
 
-        unit.AddEmployee(employee);
-        
-        return Result.Success();
+        unit.AddEmployee(employee.Employee);
+
+        return employee;
     }
 
     #region Overrides

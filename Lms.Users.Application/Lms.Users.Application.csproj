@@ -7,7 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="12.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\Lms.Core.Domain\Lms.Core.Domain.csproj" />
+      <ProjectReference Include="..\Lms.Users.Domain\Lms.Users.Domain.csproj" />
     </ItemGroup>
 
 </Project>

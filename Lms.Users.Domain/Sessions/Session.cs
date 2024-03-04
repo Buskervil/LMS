@@ -1,4 +1,6 @@
 using Lms.Core.Domain.Primitives;
+using Lms.Core.Domain.Results;
+using Lms.Users.Domain.Employees;
 using Lms.Users.Domain.Employees.ValueObjects;
 
 namespace Lms.Users.Domain.Sessions;
@@ -48,4 +50,21 @@ public sealed class Session : Entity
     }
 
     #endregion
+
+    public static Result<Session> Create(AuthenticationLogin authenticationLogin, string password)
+    {
+        var result = authenticationLogin.ValidatePassword(password);
+
+        if (result.IsFailure)
+        {
+            return Result.Failure<Session>(result.Error);
+        }
+        
+        return new Session(Guid.NewGuid(),
+            authenticationLogin.Employee.Id,
+            authenticationLogin.Employee.OrganizationId,
+            authenticationLogin.Employee.UnitId,
+            DateTimeOffset.UtcNow,
+            authenticationLogin.Employee.Role);
+    }
 }

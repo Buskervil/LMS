@@ -29,6 +29,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Lms.Core.Api\Lms.Core.Api.csproj" />
       <ProjectReference Include="..\Lms.CoursesApi\Lms.CoursesApi.csproj" />
+      <ProjectReference Include="..\Lms.User.Api\Lms.User.Api.csproj" />
     </ItemGroup>
 
 </Project>

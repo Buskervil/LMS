@@ -15,6 +15,7 @@
       <ProjectReference Include="..\Lms.Core.Infrastructure\Lms.Core.Infrastructure.csproj" />
       <ProjectReference Include="..\Lms.Courses.Application\Lms.Courses.Application.csproj" />
       <ProjectReference Include="..\Lms.Courses.Infrastructure\Lms.Courses.Infrastructure.csproj" />
+      <ProjectReference Include="..\Lms.Users.Application\Lms.Users.Application.csproj" />
     </ItemGroup>
 
     <ItemGroup>

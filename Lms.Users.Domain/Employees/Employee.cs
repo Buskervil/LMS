@@ -11,15 +11,13 @@ public sealed class Employee : AggregateRoot
     public string Post { get; private set; }
     public UserRole Role { get; private set; }
     public Profile Profile { get; private set; }
-    public AuthenticationLogin Authentication { get; private set; }
 
     private Employee(Guid id,
         Guid organizationId,
         Guid unitId,
         string post,
         UserRole role,
-        Profile profile,
-        AuthenticationLogin authentication)
+        Profile profile)
     {
         Id = id;
         OrganizationId = organizationId;
@@ -27,22 +25,22 @@ public sealed class Employee : AggregateRoot
         Post = post;
         Role = role;
         Profile = profile;
-        Authentication = authentication;
     }
 
     private Employee()
     {
     }
 
-    public static Employee Create(Guid organizationId,
+    public static (Employee Employee, AuthenticationLogin Login) Create(Guid organizationId,
         Guid unitId,
         string post,
         UserRole role,
         Profile profile, Login login)
     {
-        var authentication = AuthenticationLogin.Create(login);
-        
-        return new Employee(Guid.NewGuid(), organizationId, unitId, post, role, profile, authentication);
+        var employee = new Employee(Guid.NewGuid(), organizationId, unitId, post, role, profile);
+        var authentication = AuthenticationLogin.Create(login, employee);
+
+        return (employee, authentication);
     }
 
     #region Overrides

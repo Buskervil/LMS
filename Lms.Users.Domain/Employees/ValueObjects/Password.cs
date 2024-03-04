@@ -10,7 +10,10 @@ public struct Password : IComparable
     public Password(string value)
     {
         Value = value;
+    }
 
+    public static Password Create(string value)
+    {
         if (string.IsNullOrWhiteSpace(value))
         {
             throw new ArgumentException($"{nameof(Password)} не может быть пустым");
@@ -20,10 +23,7 @@ public struct Password : IComparable
         {
             throw new ArgumentException($"Пароль должен состоять минимум из {MinLength} символов");
         }
-    }
-
-    public static Password Create(string value)
-    {
+        
         var encrypted = Encryption.EncryptPassword(value);
         return new Password(encrypted);
     }

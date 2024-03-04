@@ -1,16 +1,21 @@
 using Lms.Core.Api;
-using Lms.Courses.Infrastructure.DataAccess;
 using Lms.CoursesApi;
-using Microsoft.EntityFrameworkCore;
+using Lms.User.Api;
+using LMSApi;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(config =>
+{
+    config.OperationFilter<MyHeaderFilter>();
+});
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(CourseController).Assembly);
+
 builder.Services
-    .AddCourseModule()
-    .AddCoreModule();
+    .AddCoreModule(builder.Configuration)
+    .AddUsersModule(builder.Configuration)
+    .AddCourseModule(builder.Configuration);
 
 builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
     policyBuilder =>
@@ -18,11 +23,7 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
         policyBuilder.WithOrigins("http://localhost:3000");
     }));
 
-var connectionString = builder.Configuration.GetConnectionString("Default");
-builder.Services.AddDbContext<CoursesContext>(options => options.UseNpgsql(connectionString));
-
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
