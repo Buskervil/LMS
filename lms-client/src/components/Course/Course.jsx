@@ -5,6 +5,7 @@ import { ReadOutlined, PlayCircleOutlined, QuestionCircleOutlined } from '@ant-d
 import { useState, useEffect } from 'react';
 import apiClient from "../../apiClient/apiClient"
 import Markdown from 'react-markdown'
+import CourseContent from './CourseContent';
 
 const Course = () => {
 
@@ -32,6 +33,13 @@ const Course = () => {
         for (let section of courseStructure.sections){
             let children = []
 
+            if (section.description){
+              children.push({
+                key: section.id + "section-description",
+                label: "Об этом разделе",
+              })
+            }
+
             for (let item of section.items){
 
                 let icon = item.type === 0
@@ -55,20 +63,19 @@ const Course = () => {
         return items;
     }
 
-
     useEffect(() => {
-        const fetchCourses = async () => {
+        const fetchCourse = async () => {
             try {
-                const coursesData = await apiClient.getCourse(id);
-                setCourse(coursesData);
-                let items = getItems(coursesData);
+                const courseData = await apiClient.getCourse(id);
+                setCourse(courseData);
+                let items = getItems(courseData);
                 setStructure(items);
             } catch (error) {
                 console.error('Error fetching courses:', error);
             }
         };
 
-        fetchCourses();
+        fetchCourse();
 
     }, []);
 
@@ -80,8 +87,7 @@ const Course = () => {
     console.log(selectedItem === courseHome)
 
     return (
-      <div className='course-page'>
-
+      <div className="course-page">
         <Menu
           mode="inline"
           items={menuStructure}
@@ -90,17 +96,20 @@ const Course = () => {
           onClick={(e) => onMenuClick(e.key)}
         />
 
-        {selectedItem === courseHome
-            ?
-                <div className='course-wrapper'>
-                    <h1 className='course-header'>{courseStructure.courseName}</h1>
-                    <Markdown>{courseStructure.courseDescription}</Markdown>
-                    <p>Продолжительность курса {courseStructure.duration} дней</p>
-                    <p>Курс создан: {getReadableDate(courseStructure.createdAt)}</p>
-                </div>
-            : 
-                <div/>
-        }
+        <div className="course-wrapper">
+          {selectedItem === courseHome ? (
+            <>
+              <h1 className="course-header">{courseStructure.courseName}</h1>
+              <Markdown>{courseStructure.courseDescription}</Markdown>
+              <p>Продолжительность курса {courseStructure.duration} дней</p>
+              <p>Курс создан: {getReadableDate(courseStructure.createdAt)}</p>
+            </>
+          ) : selectedItem.includes("section-description")
+          ?(<Markdown>{courseStructure.sections.find(s => selectedItem.includes(s.id)).description}</Markdown>)
+          :(
+            <CourseContent key={selectedItem} itemId={selectedItem} courseId={courseStructure.courseId}/>
+          )}
+        </div>
       </div>
     );
 }

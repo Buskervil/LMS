@@ -25,6 +25,19 @@ const apiClient = {
         let json = await response.json();
         console.log(json)
         return json;
+    },
+
+    getCourseItem: async (courseId, itemId) => {
+        let response = await fetch(
+            `${baseUrl}/api/course/${courseId}/item/${itemId}`,
+            {
+              method: 'get'
+            }
+        ) 
+        
+        let json = await response.json();
+        console.log(json)
+        return json;
     }
 }
 

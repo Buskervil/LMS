@@ -4,6 +4,7 @@ using Courses.Application.Courses.AddSection;
 using Courses.Application.Courses.CreateCourse;
 using Courses.Application.Courses.GetCourses;
 using Courses.Application.Courses.GetCourseStructure;
+using Courses.Application.Courses.GetItem;
 using Lms.Core.Api;
 using Lms.CoursesApi.Dto.Courses;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,15 @@ public class CourseController : BaseController
     public async Task<IActionResult> GetCourse(Guid id)
     {
         var query = new GetCourseStructureQuery(id);
+        var result = await _coursesModule.ExecuteQueryAsync(query);
+
+        return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result.Value);
+    }
+    
+    [HttpGet("{courseId}/item/{itemId}")]
+    public async Task<IActionResult> GetItem(Guid courseId, Guid itemId)
+    {
+        var query = new GetItemQuery(courseId, itemId);
         var result = await _coursesModule.ExecuteQueryAsync(query);
 
         return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result.Value);

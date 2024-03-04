@@ -2,7 +2,7 @@ namespace Lms.Courses.Domain.Courses.ValueObjects;
 
 public struct ArticleContent : IComparable
 {
-    private const int MaxLength = 1500;
+    private const int MaxLength = 5000;
     public readonly string Value;
 
     public ArticleContent(string value)
