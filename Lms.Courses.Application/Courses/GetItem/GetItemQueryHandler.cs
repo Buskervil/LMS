@@ -36,8 +36,10 @@ internal sealed class GetItemQueryHandler : IQueryHandler<GetItemQuery, object>
             case Article article:
                 return new { Name = article.Name.Value, Content = article.Content.Value, article.CreatedAt, Type = ItemType.Article };
             
-            case Test test:
             case Video video:
+                return new { Name = video.Name.Value, Source = video.ContentLink, video.CreatedAt, Type = ItemType.Video };
+            
+            case Test test:
             default:
                 throw new ArgumentOutOfRangeException(nameof(item));
         }

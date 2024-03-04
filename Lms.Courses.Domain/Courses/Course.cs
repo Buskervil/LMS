@@ -81,6 +81,17 @@ public class Course : AggregateRoot
         return section.AddArticle(name, content, previousItemId);
     }
     
+    public Result<Guid> AddVideo(EntityName name, Guid sectionId, string source, Guid? previousItemId)
+    {
+        var section = _courseSections.FirstOrDefault(s => s.Id == sectionId);
+        if (section == null)
+        {
+            return Result.Failure<Guid>(ApiError.BadRequest($"Не найден раздел курса с id {section}"));
+        }
+
+        return section.AddVideo(name, source, previousItemId);
+    }
+    
     public Result EditArticle(Guid articleId, Guid sectionId, EntityName name, ArticleContent content)
     {
         var section = _courseSections.FirstOrDefault(s => s.Id == sectionId);

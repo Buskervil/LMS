@@ -17,9 +17,5 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
         builder.Property(c => c.Content)
             .HasConversion(t => t.Value,
                 v => ArticleContent.Create(v));
-                
-        // builder.Property(c => c.Name)
-        //     .HasConversion(t => t.Value,
-        //         v => EntityName.Create(v));
     }
 }

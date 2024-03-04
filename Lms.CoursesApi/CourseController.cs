@@ -1,11 +1,13 @@
 ﻿using Courses.Application.Core;
 using Courses.Application.Courses.AddArticle;
 using Courses.Application.Courses.AddSection;
+using Courses.Application.Courses.AddVideo;
 using Courses.Application.Courses.CreateCourse;
 using Courses.Application.Courses.GetCourses;
 using Courses.Application.Courses.GetCourseStructure;
 using Courses.Application.Courses.GetItem;
 using Lms.Core.Api;
+using Lms.Courses.Infrastructure.Migrations;
 using Lms.CoursesApi.Dto.Courses;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,6 +78,20 @@ public class CourseController : BaseController
             createData.CourseId,
             createData.PreviousSectionId,
             createData.Content);
+        var result = await _coursesModule.ExecuteCommandAsync(command);
+
+        return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result.Value);
+    }
+    
+    [HttpPost("AddVideo")]
+    public async Task<IActionResult> AddVideo(VideoCreateData createData)
+    {
+        var command = new AddVideoCommand(createData.Name,
+            createData.SectionId,
+            createData.CourseId,
+            createData.PreviousSectionId,
+            createData.SourceLink);
+        
         var result = await _coursesModule.ExecuteCommandAsync(command);
 
         return result.IsFailure ? CreateErrorResponse(result.Error) : Ok(result.Value);

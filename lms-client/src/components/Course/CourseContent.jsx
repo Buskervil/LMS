@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import apiClient from "../../apiClient/apiClient"
 import Markdown from 'react-markdown'
-
+import './CourseContent.css'
 
 const CourseContent = (props) => {
 
@@ -27,6 +27,20 @@ const CourseContent = (props) => {
           <div>
             <Markdown>{item.content}</Markdown>
           </div>
+        ) : item.type === 1 ? (
+            <>
+            <h1 className="video-header">{item.name}</h1>
+            <iframe
+            width="100%"
+            height="800px"
+            sandbox='allow-same-origin allow-forms allow-popups allow-scripts allow-presentation'
+            src={item.source}
+            title="Параметры в ссылках в React Router 6"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe></>
+          
         ) : (
           <div />
         )}

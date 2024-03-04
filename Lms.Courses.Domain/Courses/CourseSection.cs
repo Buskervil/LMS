@@ -121,4 +121,21 @@ public class CourseSection : Entity
 
         return items;
     }
+
+    public Result<Guid> AddVideo(EntityName name, string source, Guid? previousItemId)
+    {
+        if (previousItemId.HasValue)
+        {
+            var previousItem = _courseItems.FirstOrDefault(t => t.Id == previousItemId);
+            if (previousItem == null)
+            {
+                return Result.Failure<Guid>(ApiError.BadRequest($"Не найден предыдущий элемент с id {previousItemId} в разделе"));
+            }
+        }
+
+        var video = Video.Create(name, Id, source, previousItemId);
+       _courseItems.Add(video);
+
+       return video.Id;
+    }
 }
