@@ -3,6 +3,7 @@ import apiClient from "../../apiClient/apiClient"
 import Markdown from 'react-markdown'
 import './CourseContent.css'
 import Quiz from "../Quiz/Quiz"
+import Statistics from "../Statistics/Statistics"
 
 const CourseContent = (props) => {
 
@@ -43,7 +44,7 @@ const CourseContent = (props) => {
             ></iframe>
           </>
         ) : (
-          <Quiz quiz={item}/>
+          <Quiz quiz={item} courseId={props.courseId} learningId={props.learningId} quizId={props.itemId}/>
         )}
       </>
     );

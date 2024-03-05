@@ -13,3 +13,9 @@
     height: 250px;
     overflow: hidden;
 }
+
+.card-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

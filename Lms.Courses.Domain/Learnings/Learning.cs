@@ -1,6 +1,7 @@
 using Lms.Core.Domain.Primitives;
 using Lms.Core.Domain.Results;
 using Lms.Courses.Domain.Courses;
+using Lms.Courses.Domain.Dto;
 using Lms.Courses.Domain.Learnings.ValueObjects;
 
 namespace Lms.Courses.Domain.Learnings;

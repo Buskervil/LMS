@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import apiClient from "../../apiClient/apiClient"
 import Markdown from 'react-markdown'
 import CourseContent from '../CourseContent/CourseContent';
+import Statistics from '../Statistics/Statistics';
 
 const Course = () => {
 
@@ -67,6 +68,11 @@ const Course = () => {
               label: section.name,
             });
         }
+
+        items.push({
+          key: "stats",
+          label: "Статистика",
+        });
 
         return items;
     }
@@ -163,16 +169,24 @@ const Course = () => {
                 ).description
               }
             </Markdown>
+          ) : selectedItem === "stats" ? (
+            <Statistics courseId={courseStructure.courseId}/>
           ) : (
             <CourseContent
               key={selectedItem}
               itemId={selectedItem}
               courseId={courseStructure.courseId}
+              learningId={courseStructure.learningId}
             />
           )}
 
           {!courseStructure.learningId && (
-            <Button type="primary" size="large" className="startCourse-button" onClick={onStartCourseClick}>
+            <Button
+              type="primary"
+              size="large"
+              className="startCourse-button"
+              onClick={onStartCourseClick}
+            >
               Записаться
             </Button>
           )}

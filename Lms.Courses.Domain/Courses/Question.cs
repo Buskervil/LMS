@@ -1,4 +1,5 @@
 using Lms.Core.Domain.Primitives;
+using Lms.Courses.Domain.Dto;
 using Lms.Courses.Domain.Learnings.ValueObjects;
 
 namespace Lms.Courses.Domain.Courses;
@@ -33,10 +34,15 @@ public sealed class Question : Entity
     public Percent GetScore(IEnumerable<SolvedAnswer> solvedAnswers)
     {
         var correctAnswers = 0;
-        foreach (var solvedAnswer in solvedAnswers)
+
+        foreach (var answer in _answers)
         {
-            var answer = _answers.First(a => a.Id == solvedAnswer.Id);
-            if (answer.IsCorrect && solvedAnswer.IsSelected)
+            var solved = solvedAnswers.FirstOrDefault(a => a.Id == answer.Id);
+            if (answer.IsCorrect == false && (solved == null || solved.IsSelected == false))
+            {
+                correctAnswers++;
+            }
+            else if (answer.IsCorrect && solved != null && solved.IsSelected)
             {
                 correctAnswers++;
             }

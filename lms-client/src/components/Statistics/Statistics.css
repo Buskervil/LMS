@@ -1,0 +1,8 @@
+.statistics{
+    display: flex;
+    gap: 30px;
+}
+
+.statistics-header{
+    margin-bottom: 40px;
+}

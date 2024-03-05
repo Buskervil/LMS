@@ -6,4 +6,5 @@ public sealed class Statistics
     public IReadOnlyCollection<SectionProgress> SectionProgress { get; init; }
     public IReadOnlyCollection<QuizResult> QuizResults { get; init; }
     public double TotalProgress { get; init; }
+    public double TotalScore { get; init; }
 }

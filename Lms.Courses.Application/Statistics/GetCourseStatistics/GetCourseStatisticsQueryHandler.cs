@@ -27,11 +27,10 @@ internal sealed class GetCourseStatisticsQueryHandler : IQueryHandler<GetCourseS
         var sections = course.CourseSections;
         var learning = await _coursesReadRepository.GetLearningByCourse(course.Id, _sessionProvider.UserId);
 
-
         var quizResults = new List<QuizResult>();
         foreach (var quiz in course.Items.Where(t => t is Quiz))
         {
-            var progress = learning?.Progresses.Where(p => p.Id == quiz.Id).MaxBy(p => p.CommittedAt);
+            var progress = learning?.Progresses.Where(p => p.CourseItemId == quiz.Id).MaxBy(p => p.CommittedAt);
 
             if (progress != null)
             {
@@ -52,7 +51,7 @@ internal sealed class GetCourseStatisticsQueryHandler : IQueryHandler<GetCourseS
                 {
                     SectionId = s.Id,
                     SectionName = s.Name,
-                    ProgressPercent =
+                    ProgressPercent = s.CourseItems.Count == 0 ? 0 :
                         (double)learning.Progresses
                             .Where(p => s.CourseItems.Any(i => i.Id == p.CourseItemId))
                             .DistinctBy(p => p.CourseItemId)
@@ -60,9 +59,10 @@ internal sealed class GetCourseStatisticsQueryHandler : IQueryHandler<GetCourseS
                 })
                 .ToArray(),
             QuizResults = quizResults,
-            TotalProgress = (double)learning.Progresses
+            TotalProgress = Math.Round((double)learning.Progresses
                 .DistinctBy(p => p.CourseItemId)
-                .Count() / course.Items.Count
+                .Count() / course.Items.Count * 100),
+            TotalScore = quizResults.Count == 0 ? 0 :(double)quizResults.Select(r => r.ResultPercent).Sum() / quizResults.Count
         };
     }
 }

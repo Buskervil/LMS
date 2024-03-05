@@ -1,4 +1,5 @@
 using Lms.Courses.Domain.Courses.ValueObjects;
+using Lms.Courses.Domain.Dto;
 using Lms.Courses.Domain.Learnings.ValueObjects;
 
 namespace Lms.Courses.Domain.Courses;

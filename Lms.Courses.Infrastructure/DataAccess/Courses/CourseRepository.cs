@@ -13,12 +13,27 @@ public class CourseRepository : ICourseRepository
         _coursesContext = coursesContext;
     }
 
-    public Task<Course?> GetByIdAsync(CourseId id)
+    public async Task<Course?> GetByIdAsync(CourseId id)
     {
-        return _coursesContext.Courses
+        var course = await _coursesContext.Courses
             .Include(c => c.CourseSections)
             .ThenInclude(s => s.CourseItems)
             .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (course == null)
+        {
+            return course;
+        }
+
+        var quizIds = course.Items.Where(t => t is Quiz).Select(q => q.Id).ToList();
+
+        await _coursesContext.Quizes
+            .Include(q => q.Questions)
+            .ThenInclude(q => q.Answers)
+            .Where(q => quizIds.Contains(q.Id))
+            .LoadAsync();
+
+        return course;
     }
 
     public void Add(Course course)

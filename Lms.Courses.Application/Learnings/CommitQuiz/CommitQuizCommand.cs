@@ -1,5 +1,6 @@
 using Courses.Application.Core;
 using Lms.Courses.Domain.Courses;
+using Lms.Courses.Domain.Dto;
 
 namespace Courses.Application.Learnings.CommitQuiz;
 

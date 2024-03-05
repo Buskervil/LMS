@@ -26,10 +26,10 @@ internal sealed class CommitQuizCommandHandler : ICommandHandler<CommitQuizComma
 
     public async Task<Result<int>> Handle(CommitQuizCommand request, CancellationToken cancellationToken)
     {
-        var course = await _courseRepository.GetByIdAsync(CourseId.Create(request.QuizId));
+        var course = await _courseRepository.GetByIdAsync(CourseId.Create(request.CourseId));
         if (course == null)
         {
-            return Result.Failure<int>(ApiError.BadRequest($"Курс с id {request.QuizId} не существует"));
+            return Result.Failure<int>(ApiError.BadRequest($"Курс с id {request.CourseId} не существует"));
         }
 
         var learning = await _learningRepository.GetByIdAsync(request.LearningId);

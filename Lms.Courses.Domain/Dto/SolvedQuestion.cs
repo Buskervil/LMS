@@ -1,4 +1,4 @@
-namespace Lms.Courses.Domain.Courses;
+namespace Lms.Courses.Domain.Dto;
 
 public class SolvedQuestion
 {
