@@ -38,6 +38,52 @@ const apiClient = {
         let json = await response.json();
         console.log(json)
         return json;
+    },
+
+    startLearning: async (courseId) => {
+        const startLearningData = {
+            CourseId: courseId
+        };
+    
+        console.log(startLearningData)
+        let response = await fetch(
+            `${baseUrl}/api/learning/StartLearning`,
+            {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(startLearningData)
+            }
+        );
+    
+        let json = await response.json();
+        console.log(json);
+        return json;
+    },
+
+    commitItem: async (courseId, learningId, itemId) => {
+        const startLearningData = {
+            CourseId: courseId,
+            ItemId: itemId,
+            LearningId: learningId
+        };
+    
+        console.log(startLearningData)
+        let response = await fetch(
+            `${baseUrl}/api/learning/CommitItem`,
+            {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(startLearningData)
+            }
+        );
+    
+        let json = await response.json();
+        console.log(json);
+        return json;
     }
 }
 

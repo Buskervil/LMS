@@ -72,12 +72,37 @@ public sealed class Learning : Entity
             return Result.Failure<Percent>(ApiError.BadRequest($"Элемент курса с id {itemId} не найден"));
         }
 
-        var score = item.GetScore();
+        var scoreInPercent = Percent.Create(100);
+        var progress = Progress.Create(Id, itemId, scoreInPercent);
+        
+        _progresses.Add(progress);
+        
+        return scoreInPercent;
+    }
+    
+    public Result<Percent> CommitQuiz(Course course, Guid itemId, IEnumerable<SolvedQuestion> solvedQuestions)
+    {
+        if (course.Items.FirstOrDefault(t => t.Id == itemId) is not Quiz quiz)
+        {
+            return Result.Failure<Percent>(ApiError.BadRequest($"Элемент курса с id {itemId} не найден"));
+        }
+
+        var score = quiz.GetScore(solvedQuestions);
         var progress = Progress.Create(Id, itemId, score);
         
         _progresses.Add(progress);
         
         return score;
+    }
+
+    public Guid? GetLastCommittedItem()
+    {
+        return _progresses.MaxBy(p => p.CommittedAt)?.Id;
+    }
+    
+    public bool IsItemCommitted(Guid itemId)
+    {
+        return _progresses.Any(p => p.CourseItemId == itemId);
     }
 
     #region Overrides

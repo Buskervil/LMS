@@ -20,8 +20,6 @@ public abstract class CourseItem : Entity
         CreatedAt = createdAt;
         PreviousItemId = previousItemId;
     }
-
-    public abstract Percent GetScore();
     
     #region Overrides
 

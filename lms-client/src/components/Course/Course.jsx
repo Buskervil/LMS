@@ -1,11 +1,11 @@
 import './Course.css'
 import {useParams} from 'react-router-dom'
-import { Menu } from 'antd';
+import { Button, Menu } from 'antd';
 import { ReadOutlined, PlayCircleOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import apiClient from "../../apiClient/apiClient"
 import Markdown from 'react-markdown'
-import CourseContent from './CourseContent';
+import CourseContent from '../CourseContent/CourseContent';
 
 const Course = () => {
 
@@ -42,14 +42,22 @@ const Course = () => {
 
             for (let item of section.items){
 
-                let icon = item.type === 0
-                  ? (<ReadOutlined />)
-                  : item.Type === 1 ? (<PlayCircleOutlined />) : (<QuestionCircleOutlined />);
-                
+                let icon;
+                if (item.type === 0){
+                  icon = <ReadOutlined style={item.isCommitted ? { color: 'green' } : {}}/>
+                }
+                else if (item.type === 1){
+                  icon = <PlayCircleOutlined style={item.isCommitted ? { color: 'green' } : {}}/>
+                }
+                else if (item.type === 2){
+                  icon = <QuestionCircleOutlined style={item.isCommitted ? { color: 'green' } : {}}/>
+                }
+
                 children.push({
                   key: item.id,
                   icon: icon,
                   label: item.name,
+                  disabled: courseStructure.deadline == null,
                 });
             }
 
@@ -63,25 +71,67 @@ const Course = () => {
         return items;
     }
 
-    useEffect(() => {
-        const fetchCourse = async () => {
-            try {
-                const courseData = await apiClient.getCourse(id);
-                setCourse(courseData);
-                let items = getItems(courseData);
-                setStructure(items);
-            } catch (error) {
-                console.error('Error fetching courses:', error);
+    const fetchCourse = async () => {
+      try {
+        const courseData = await apiClient.getCourse(id);
+        setCourse(courseData);
+        let items = getItems(courseData);
+        setStructure(items);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+
+    async function commitItem(itemId){
+        let item = courseStructure.sections
+          .flatMap((s) => s.items)
+          .find(t => t.id === itemId);
+
+        console.log("try commit", item, itemId)
+
+        if (item && (item.type === 0 || item.type === 1) && !item.isCommitted){
+          await apiClient.commitItem(
+            courseStructure.courseId,
+            courseStructure.learningId,
+            itemId
+          );
+
+          setCourse((courseStructure) => {
+            const newStructure = { ...courseStructure };
+            let item = newStructure.sections
+              .flatMap((s) => s.items)
+              .find((t) => t.id === itemId);
+
+            if (item) {
+              item.isCommitted = true;
             }
-        };
 
-        fetchCourse();
+            return newStructure;
+          });
 
+          let items = getItems(courseStructure);
+          setStructure(items);
+        }
+    }
+
+    useEffect(() => {
+      fetchCourse();
     }, []);
 
     function onMenuClick(itemId){
         console.log("click")
         setSelectedItem(itemId)
+
+        commitItem(itemId)
+    }
+
+    async function onStartCourseClick() {
+      try {
+        await apiClient.startLearning(id);
+        await fetchCourse();
+      } catch (error) {
+        console.error("Error starting course:", error);
+      }
     }
 
     console.log(selectedItem === courseHome)
@@ -94,6 +144,7 @@ const Course = () => {
           className="course-structure-menu"
           defaultSelectedKeys={[courseHome]}
           onClick={(e) => onMenuClick(e.key)}
+          defaultOpenKeys={[courseStructure.lastCommittedItem]}
         />
 
         <div className="course-wrapper">
@@ -104,10 +155,26 @@ const Course = () => {
               <p>Продолжительность курса {courseStructure.duration} дней</p>
               <p>Курс создан: {getReadableDate(courseStructure.createdAt)}</p>
             </>
-          ) : selectedItem.includes("section-description")
-          ?(<Markdown>{courseStructure.sections.find(s => selectedItem.includes(s.id)).description}</Markdown>)
-          :(
-            <CourseContent key={selectedItem} itemId={selectedItem} courseId={courseStructure.courseId}/>
+          ) : selectedItem.includes("section-description") ? (
+            <Markdown>
+              {
+                courseStructure.sections.find((s) =>
+                  selectedItem.includes(s.id)
+                ).description
+              }
+            </Markdown>
+          ) : (
+            <CourseContent
+              key={selectedItem}
+              itemId={selectedItem}
+              courseId={courseStructure.courseId}
+            />
+          )}
+
+          {!courseStructure.learningId && (
+            <Button type="primary" size="large" className="startCourse-button" onClick={onStartCourseClick}>
+              Записаться
+            </Button>
           )}
         </div>
       </div>

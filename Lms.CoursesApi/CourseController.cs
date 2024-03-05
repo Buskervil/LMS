@@ -7,7 +7,6 @@ using Courses.Application.Courses.GetCourses;
 using Courses.Application.Courses.GetCourseStructure;
 using Courses.Application.Courses.GetItem;
 using Lms.Core.Api;
-using Lms.Courses.Infrastructure.Migrations;
 using Lms.CoursesApi.Dto.Courses;
 using Microsoft.AspNetCore.Mvc;
 

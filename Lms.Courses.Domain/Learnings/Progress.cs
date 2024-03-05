@@ -29,7 +29,6 @@ public sealed class Progress : Entity
         return new Progress(Guid.NewGuid(), learningId, courseItemId, scoreInPercent, DateTimeOffset.UtcNow);
     }
 
-
     #region Overrides
 
     public override bool Equals(Entity other)

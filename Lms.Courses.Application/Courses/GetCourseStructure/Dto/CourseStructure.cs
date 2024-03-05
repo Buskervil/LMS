@@ -1,4 +1,5 @@
 using Lms.Courses.Domain.Courses;
+using Lms.Courses.Domain.Learnings;
 
 namespace Courses.Application.Courses.GetCourseStructure.Dto;
 
@@ -10,8 +11,11 @@ public sealed class CourseStructure
     public DateTimeOffset CreatedAt { get; init; }
     public int Duration { get; init; }
     public CourseSection[] Sections { get; init; }
+    public DateTimeOffset? Deadline { get; init; }
+    public Guid? LearningId { get; init; }
+    public Guid? LastCommittedItem { get; init; }
 
-    public static CourseStructure Create(Course course)
+    public static CourseStructure Create(Course course, Learning? learning)
     {
         return new CourseStructure
         {
@@ -37,12 +41,16 @@ public sealed class CourseStructure
                                 {
                                     Article => ItemType.Article,
                                     Video => ItemType.Video,
-                                    Test => ItemType.Quiz,
+                                    Quiz => ItemType.Quiz,
                                     _ => throw new ArgumentOutOfRangeException(nameof(item), item, null)
-                                }
+                                },
+                                IsCommitted = learning?.IsItemCommitted(item.Id) ?? false
                             };
                 }).ToList()
-            }).ToArray()
+            }).ToArray(),
+            Deadline = learning?.Deadline,
+            LearningId = learning?.Id,
+            LastCommittedItem = learning?.GetLastCommittedItem()
         };
     }
 }

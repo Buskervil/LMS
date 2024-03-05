@@ -15,6 +15,12 @@ public struct Percent : IComparable
     }
     
     public static Percent Create(int value) => new Percent(value);
+    
+    public static Percent FromDouble(double value)
+    {
+        var intPercent = (int)Math.Round(value * 100);
+        return Create(intPercent);
+    }
 
     #region Overrides
 

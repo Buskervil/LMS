@@ -1,8 +1,9 @@
 using Courses.Application.Core;
+using Courses.Application.Courses.GetItem.Dto;
 
 namespace Courses.Application.Courses.GetItem;
 
-public sealed class GetItemQuery : IQuery<object>
+public sealed class GetItemQuery : IQuery<CourseItem>
 {
     public Guid CourseId { get; }
     public Guid ItemId { get; }

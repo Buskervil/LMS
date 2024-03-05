@@ -6,4 +6,5 @@ public class CourseItem
     public string Name { get; init; }
     public Guid? PreviousItemId { get; init; }
     public ItemType Type { get; init; }
+    public bool IsCommitted { get; init; }
 }

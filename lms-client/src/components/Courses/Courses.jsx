@@ -32,7 +32,7 @@ const Courses = () => {
           />
           <CoursesPage
             className="half-width"
-            courses={courses}
+            courses={courses.filter(c => c.started)}
             title="Мои курсы"
           />
         </div>

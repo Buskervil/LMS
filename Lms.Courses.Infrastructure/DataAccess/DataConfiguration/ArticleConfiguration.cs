@@ -19,3 +19,18 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
                 v => ArticleContent.Create(v));
     }
 }
+
+public class QuestionConfiguration : IEntityTypeConfiguration<Question>
+{
+    public void Configure(EntityTypeBuilder<Question> builder)
+    {
+        builder.ToTable("Question");
+        
+        builder.Property(c => c.Id)
+            .ValueGeneratedNever();
+
+        builder.HasMany(q => q.Answers)
+            .WithOne()
+            .HasForeignKey(q => q.QuestionId);
+    }
+}

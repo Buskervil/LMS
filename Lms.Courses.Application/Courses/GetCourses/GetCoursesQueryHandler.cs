@@ -32,7 +32,7 @@ internal sealed class GetCoursesQueryHandler : IQueryHandler<GetCoursesQuery, IR
             ELSE FALSE
             END AS "Ended"
             FROM "Course" C
-            LEFT JOIN "Learnings" L ON L."CourseId" = C."Id"
+            LEFT JOIN "Learning" L ON L."CourseId" = C."Id"
             """;
 
         var courses = await connection.QueryAsync<CourseData>(coursesQuery, transaction: transaction);

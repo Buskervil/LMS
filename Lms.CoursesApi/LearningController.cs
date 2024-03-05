@@ -28,7 +28,7 @@ public class LearningController : BaseController
     }
     
     [HttpPost("StartLearning")]
-    public async Task<IActionResult> StartLearning(StartLearningData startLearningData)
+    public async Task<IActionResult> StartLearning([FromBody] StartLearningData startLearningData)
     {
         var command = new StartLearnCourseCommand(startLearningData.CourseId);
         var result = await _coursesModule.ExecuteCommandAsync(command);
@@ -37,9 +37,9 @@ public class LearningController : BaseController
     }
     
     [HttpPost("CommitItem")]
-    public async Task<IActionResult> CommitItem(CommitItemData commitItemData)
+    public async Task<IActionResult> CommitItem([FromBody] CommitItemData commitItemData)
     {
-        var command = new CommitItemCommand(commitItemData.LearningId, commitItemData.CourseId, commitItemData.ItemId);
+        var command = new CommitItemCommand(commitItemData.CourseId, commitItemData.ItemId, commitItemData.LearningId);
         var result = await _coursesModule.ExecuteCommandAsync(command);
 
         return result.IsSuccess ? Ok(result) : CreateErrorResponse(result.Error);

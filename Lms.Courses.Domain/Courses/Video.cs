@@ -18,7 +18,7 @@ public class Video : CourseItem
         ContentLink = contentLink;
     }
 
-    public override Percent GetScore()
+    public Percent GetScore()
     {
         return Percent.Create(100);
     }

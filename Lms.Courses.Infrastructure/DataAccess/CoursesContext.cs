@@ -12,6 +12,7 @@ public class CoursesContext : DbContext, IUnitOfWork
 
     public DbSet<Course> Courses { get; private set; } = null!;
     public DbSet<Learning> Learnings { get; private set; } = null!;
+    public DbSet<Quiz> Quizes { get; private set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

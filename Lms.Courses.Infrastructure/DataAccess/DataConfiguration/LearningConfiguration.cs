@@ -8,6 +8,7 @@ public class LearningConfiguration : IEntityTypeConfiguration<Learning>
 {
     public void Configure(EntityTypeBuilder<Learning> builder)
     {
+        builder.ToTable("Learning");
         builder.HasKey(c => c.Id);
         
         builder.Property(c => c.Id)

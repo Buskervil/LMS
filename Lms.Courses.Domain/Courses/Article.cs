@@ -35,7 +35,7 @@ public class Article : CourseItem
         return Result.Success();
     }
 
-    public override Percent GetScore()
+    public Percent GetScore()
     {
         return Percent.Create(100);
     }

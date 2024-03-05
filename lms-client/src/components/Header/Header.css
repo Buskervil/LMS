@@ -3,7 +3,13 @@ header{
     width: 100%;
     background-color: rgb(21, 64, 99);
 
-    /* position: fixed;
-    top: 0;
-    left: 0; */
+    display: flex;
+    align-items: center;
+    padding: 0px 40px;
+}
+
+.company-name{
+    color: white;
+    font-size: larger;
+    text-decoration: none;
 }
